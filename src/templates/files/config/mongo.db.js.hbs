@@ -1,0 +1,50 @@
+'use strict'
+
+const mongoose = require('mongoose')
+const chalk = require('chalk')
+const LOGGER = require('../app/utils/logger')
+
+class MongoDBConnect {
+  constructor (props) {
+    this.default = {
+      host: 'localhost',
+      db: 'test',
+      port: '27017',
+      auth: false
+    }
+  }
+
+  connect (conf = {}) {
+    const credentials = Object.assign({}, this.default, conf)
+
+    mongoose.Promise = global.Promise
+
+    mongoose.connection.on('connected', () => {
+      setTimeout(() => {
+        process.stdout.write(chalk.green('MONGO [ OK ]\n'))
+      }, 400)
+    })
+
+    mongoose.connection.on('error', () => {
+      process.stdout.write(chalk.red('ERROR MONGO CONNECT DB'))
+      LOGGER.report('#MONGO_ERROR: CONNECT TO DB')
+    })
+
+    if (credentials.auth) {
+      mongoose.connect(`mongodb://${credentials.host}:${credentials.port}/${credentials.db}`, {
+        useMongoClient: true,
+        user: credentials.user,
+        pass: credentials.pass,
+        auth: {
+          authdb: credentials.db
+        }
+      })
+    } else {
+      mongoose.connect(`mongodb://${credentials.host}:${credentials.port}/${credentials.db}`, { useMongoClient: true })
+    }
+
+    return mongoose
+  }
+}
+
+module.exports = new MongoDBConnect

@@ -19,12 +19,12 @@ program
  */
 if (program.init) {
   inquirer.prompt(init).then(answers => {
-    console.log(answers)
-
     let coreFiles = CORE(answers)
 
     coreFiles.map(props => {
-      return File(answers, props)
+      if (props != null) {
+        return File(answers, props)
+      }
     })
 
     console.log('Finished!')

@@ -13,7 +13,9 @@ const chalk = require('chalk')
  *==================================*/
 const {
   SERVER_CONFIG,
+  {{#if mongo_integration }}
   MONGO_DB
+  {{/if}}
 } = require('./config')
 
  /* Uses () */
@@ -24,8 +26,10 @@ app.use(morgan('dev'))
 app.use(DEFAULT_RESPONSE)
 
 /* Databases */
+{{#if mongo_integration }}
 const mongo = require('./config/mongo.db')
 mongo.connect(MONGO_DB[process.env.NODE_ENV || 'development'])
+{{/if }}
 
 /**
  *  ROUTER

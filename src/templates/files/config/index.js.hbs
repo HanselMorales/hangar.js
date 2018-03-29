@@ -1,0 +1,46 @@
+'use strict'
+
+exports.SERVER_CONFIG = {
+  'port': process.env.APP_PORT || {{ service_port }},
+  'uploadLimit': process.env.UPLOAD_LIMIT || '100mb',
+  'lang': 'ES',
+  'xmlGlobalResponse': false
+}
+
+exports.SECRET_KEYS = {
+  'jwt': process.env.JWT_PASS || 'FLAGOON_SESSION_TEST'
+}
+
+{{#if mongo_integration }}
+exports.MONGO_DB = {
+  'development': {
+    'host': process.env.MONGO_DB_HOST || 'localhost',
+    'db': process.env.MONGO_DB_NAME || {{ mongo_db }},
+    'port': process.env.MONGO_DB_PORT || {{ mongo_port }},
+    'username': process.env.MONGO_DB_USER || '',
+    'password': process.env.MONGO_DB_PASSWORD || '',
+    'auth': Boolean(process.env.MONGO_DB_AUTH_FLAG)
+  },
+  'production': {
+    'host': process.env.MONGO_DB_HOST || {{ mongo_host }},
+    'db': process.env.MONGO_DB_NAME || '{{ mongo_db }}',
+    'port': process.env.MONGO_DB_PORT || {{ mongo_port }},
+    'username': process.env.MONGO_DB_USER || '',
+    'password': process.env.MONGO_DB_PASSWORD || '',
+    'auth': Boolean(process.env.MONGO_DB_AUTH_FLAG)
+  }
+}
+{{/if }}
+
+{{#if redis_integration }}
+exports.REDIS_DB = {
+  'development': {
+    'host': process.env.REDIS_DB_HOST || 'localhost',
+    'port': process.env.REDIS_DB_PORT || {{ redis_port }},
+  },
+  'production': {
+    'host': process.env.REDIS_DB_HOST || {{ redis_host }},
+    'port': process.env.REDIS_DB_PORT || {{ redis_port }}
+  }
+}
+{{/if}}

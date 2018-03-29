@@ -30,6 +30,20 @@ module.exports = (answers) => {
       name: '.dockerignore',
       output: process.cwd(),
       source: files.dockerignore
+    }, {
+      name: 'index.js',
+      output: `${process.cwd()}/config`,
+      source: files.config.indexJS
+    },
+    (!answers.mongo_integration) ? null : {
+      name: 'mongo.db.js',
+      output: `${process.cwd()}/config`,
+      source: files.config.mongoDBJS
+    },
+    (!answers.redis_integration) ? null : {
+      name: 'redis.db.js',
+      output: `${process.cwd()}/config`,
+      source: files.config.redisDBJS
     }
   ]
 }

@@ -1,0 +1,34 @@
+'use strict'
+
+const LOGGER = require('../app/utils/logger')
+const { REDIS_DB } = require('./')
+
+const chalk = require('chalk')
+const { createClient } = require('then-redis')
+
+class SessionManager {
+  constructor (config = {}) {
+    let connection = Object.assign({}, REDIS_DB[process.env.NODE_ENV], config)
+
+    return this.connect(connection)
+  }
+
+  connect (connection = {}) {
+    let client = createClient(connection)
+
+    /* STDOUT Success Connection */
+    client.on('connection', () => {
+      process.stdout.write(chalk.green('REDIS [OK]'))
+    })
+
+    /* STDOUT ERR Connection */
+    client.on('error', () => {
+      process.stdout.write(chalk.red('#REDIS_ERROR: NOT CONNECT TO DB'))
+      LOGGER.report('#REDIS_ERROR: NOT CONNECT TO DB')
+    })
+
+    return client
+  }
+}
+
+module.exports = SessionManager
