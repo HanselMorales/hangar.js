@@ -4,6 +4,7 @@
 **/keys
 **/db.json
 **/logs/*.txt
+**/package-lock.json
 
 **/*.sublime-*
 **/.vscode
