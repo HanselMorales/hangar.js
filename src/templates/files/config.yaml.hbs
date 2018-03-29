@@ -1,0 +1,25 @@
+version: '2'
+services:
+  {{#if mongo_integration }}
+  mongo:
+    image: mongo
+    ports:
+      - 127.0.0.1:{{ mongo_port }}:27017
+    volumes:
+      - mongo_dev_data:/data/db
+  {{/if }}
+  {{#if redis_integration }}
+  redis:
+    image: redis
+    ports:
+      - 127.0.0.1:{{ redis_port }}:6379
+    volumes:
+      - redis_dev_data:/data
+  {{/if}}
+volumes:
+  {{#if mongo_integration }}
+  mongo_dev_data:
+  {{/if }}
+  {{#if redis_integration }}
+  redis_dev_data:
+  {{/if }}

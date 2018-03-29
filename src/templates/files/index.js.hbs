@@ -1,0 +1,43 @@
+'use strict'
+
+const express = require('express')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+const app = express()
+
+const figlet = require('figlet')
+const chalk = require('chalk')
+
+/**
+ *  CONFIGURATION SERVER
+ *==================================*/
+const {
+  SERVER_CONFIG,
+  MONGO_DB
+} = require('./config')
+
+ /* Uses () */
+const DEFAULT_RESPONSE = require('./app/middlewares/default.response')
+app.use(bodyParser.urlencoded({ extended: false, limit: SERVER_CONFIG.uploadLimit }))
+app.use(bodyParser.json({ limit: SERVER_CONFIG.uploadLimit }))
+app.use(morgan('dev'))
+app.use(DEFAULT_RESPONSE)
+
+/* Databases */
+const mongo = require('./config/mongo.db')
+mongo.connect(MONGO_DB[process.env.NODE_ENV || 'development'])
+
+/**
+ *  ROUTER
+ * *=================================* */
+const ROUTES = require('./app')
+app.use(ROUTES)
+
+/* INIT SERVER */
+ app.listen(SERVER_CONFIG.port, () => {
+   figlet('{{ project_name }}', (err, data) => {
+     process.stdout.write(`${chalk.yellow.bold(data)}\n`)
+     process.stdout.write(`${chalk.yellow.bold('Foundard.com')}\n`)
+     process.stdout.write(`Running on [0.0.0.0:${SERVER_CONFIG.port}]\n`)
+   })
+ })

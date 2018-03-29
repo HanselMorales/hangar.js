@@ -1,0 +1,3 @@
+module.exports = function (value = '', data = []) {
+  return data.includes(value)
+}

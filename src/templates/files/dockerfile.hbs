@@ -1,0 +1,9 @@
+FROM node:{{ node_version }}
+
+WORKDIR /{{ project_domain_name }}
+COPY ./package.json ./package.json
+RUN npm install
+
+COPY ./ ./
+CMD npm start
+EXPOSE {{ service_port }}
