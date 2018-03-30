@@ -6,7 +6,8 @@ module.exports = {
       'baseControllerJS': fs.readFileSync(`${__dirname}/app/controllers/BaseController.js.hbs`).toString()
     },
     'schemas': {
-
+      '_commonJS': fs.readFileSync(`${__dirname}/app/schemas/_common.js.hbs`).toString(),
+      'baseSchemaJS': fs.readFileSync(`${__dirname}/app/schemas/BaseSchema.js.hbs`).toString()
     },
     'middlewares': {
       'defaultErrorJS': fs.readFileSync(`${__dirname}/app/middlewares/default.error.js.hbs`).toString(),

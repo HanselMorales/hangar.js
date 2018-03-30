@@ -1,6 +1,6 @@
 'use strict'
 
-const {{upcase controller_name }} = require('../schemas/{{capitalize controller_name }}Schema')
+const {{upcase entity_name }} = require('../schemas/{{capitalize entity_name }}Schema')
 const { getErrorKey, getResponseKey } = require('../dictionary')
 
 const moment = require('moment')
@@ -8,21 +8,21 @@ const uuid = require('uuid-base62')
 const slug = require('slug')
 
 /**
- *  List {{capitalize controller_plural_name }}
- *  This controller lists all {{capitalize controller_plural_name }} in the DB.
+ *  List {{capitalize entity_plural_name }}
+ *  This controller lists all {{capitalize entity_plural_name }} in the DB.
  *
  *  @method GET
  */
-exports.list{{capitalize controller_plural_name }} = async (req, res, next) => {
+exports.list{{capitalize entity_plural_name }} = async (req, res, next) => {
   let { query, cursor, select } = req.querymen
   let mongoQuery = Object.assign({}, query, { _deleted: false })
 
   try {
-    let {{lowercase controller_plural_name }} = await {{upcase controller_name }}.find(mongoQuery, select, cursor)
-    let count = await {{upcase controller_name }}.count(mongoQuery)
+    let {{lowercase entity_plural_name }} = await {{upcase entity_name }}.find(mongoQuery, select, cursor)
+    let count = await {{upcase entity_name }}.count(mongoQuery)
 
     res.formatResponse(200, {
-      payload: {{lowercase controller_plural_name }},
+      payload: {{lowercase entity_plural_name }},
       total: count
     })
   } catch (error) {
@@ -32,22 +32,22 @@ exports.list{{capitalize controller_plural_name }} = async (req, res, next) => {
 }
 
 /**
- *  Create {{capitalize controller_name }}
- *  This controller creates a new {{capitalize controller_name }} in the db.
+ *  Create {{capitalize entity_name }}
+ *  This controller creates a new {{capitalize entity_name }} in the db.
  *
  *  @method POST
  */
-exports.create{{capitalize controller_name }} = async (req, res, next) => {
+exports.create{{capitalize entity_name }} = async (req, res, next) => {
   let { body, params } = req
 
   try {
-    let {{lowercase controller_name }} = new {{upcase controller_name }}(Object.assign({}, body, {
+    let {{lowercase entity_name }} = new {{upcase entity_name }}(Object.assign({}, body, {
       id: uuid.v4(),
       _slug: slug(body.name, { lower: true, replacement: '_' }),
       _created_at: moment()
     }))
 
-    let saved = await  {{lowercase controller_name }}.save()
+    let saved = await  {{lowercase entity_name }}.save()
 
     res.formatResponse(201, {
       payload: saved
@@ -67,23 +67,23 @@ exports.create{{capitalize controller_name }} = async (req, res, next) => {
 }
 
 /**
- *  Detail {{capitalize controller_name }}
- *  This controller gets data for a {{capitalize controller_name }} based
+ *  Detail {{capitalize entity_name }}
+ *  This controller gets data for a {{capitalize entity_name }} based
  *  on de Id.
  *
  *  @method GET
  */
-exports.detail{{capitalize controller_name }} = async (req, res, next) => {
+exports.detail{{capitalize entity_name }} = async (req, res, next) => {
   let { params } = req
   let { select } = req.querymen
-  let mongoQuery = Object.assign({}, { id: params.{{lowercase controller_name }}Id, _deleted: false })
+  let mongoQuery = Object.assign({}, { id: params.{{lowercase entity_name }}Id, _deleted: false })
 
   try {
-    let {{lowercase controller_name }} = await {{upcase controller_name }}.findOne(mongoQuery, select)
+    let {{lowercase entity_name }} = await {{upcase entity_name }}.findOne(mongoQuery, select)
 
-    if ({{lowercase controller_name }}) {
+    if ({{lowercase entity_name }}) {
       res.formatResponse(200, {
-        payload: {{lowercase controller_name }}
+        payload: {{lowercase entity_name }}
       })
     } else {
       let notFound = new Error(getErrorKey('#RESOURCE_NOT_FOUND'))
@@ -98,23 +98,23 @@ exports.detail{{capitalize controller_name }} = async (req, res, next) => {
 }
 
 /**
- *  Update {{capitalize controller_name }}
- *  This controller updates a {{capitalize controller_name }} in the db
+ *  Update {{capitalize entity_name }}
+ *  This controller updates a {{capitalize entity_name }} in the db
  *  based on de Id.
  *
  *  @method POST
  */
-exports.update{{capitalize controller_name }} = async (req, res, next) => {
+exports.update{{capitalize entity_name }} = async (req, res, next) => {
   let { body, params } = req
-  let mongoQuery = Object.assign({}, { id: params.{{lowercase controller_name }}Id, _deleted: false })
+  let mongoQuery = Object.assign({}, { id: params.{{lowercase entity_name }}Id, _deleted: false })
 
   try {
-    let {{lowercase controller_name }} = await {{upcase controller_name }}.findOne(mongoQuery)
+    let {{lowercase entity_name }} = await {{upcase entity_name }}.findOne(mongoQuery)
 
-    if ({{lowercase controller_name }}) {
-      let update = Object.assign({{lowercase controller_name }}, body, {
-        id: {{lowercase controller_name }}.id,
-        _created_at: {{lowercase controller_name }}._created_at,
+    if ({{lowercase entity_name }}) {
+      let update = Object.assign({{lowercase entity_name }}, body, {
+        id: {{lowercase entity_name }}.id,
+        _created_at: {{lowercase entity_name }}._created_at,
         _updated_at: moment()
       })
 
@@ -135,20 +135,20 @@ exports.update{{capitalize controller_name }} = async (req, res, next) => {
 }
 
 /**
- *  Delete {{capitalize controller_name }}
- *  This controller makes a soft delete of a {{capitalize controller_name }} based
+ *  Delete {{capitalize entity_name }}
+ *  This controller makes a soft delete of a {{capitalize entity_name }} based
  *  on his Id.  
  *  @method POST
  */
-exports.delete{{capitalize controller_name }} = async (req, res, next) => {
+exports.delete{{capitalize entity_name }} = async (req, res, next) => {
   let { params } = req
-  let mongoQuery = Object.assign({}, { id: params.{{lowercase controller_name }}Id, _deleted: false })
+  let mongoQuery = Object.assign({}, { id: params.{{lowercase entity_name }}Id, _deleted: false })
 
   try {
-    let {{lowercase controller_name }} = await {{upcase controller_name }}.findOne(mongoQuery)
+    let {{lowercase entity_name }} = await {{upcase entity_name }}.findOne(mongoQuery)
 
-    if ({{lowercase controller_name }}) {
-      let update = Object.assign({{lowercase controller_name }}, { _deleted: true })
+    if ({{lowercase entity_name }}) {
+      let update = Object.assign({{lowercase entity_name }}, { _deleted: true })
       let saved = await update.save()
 
       res.formatResponse(201, {

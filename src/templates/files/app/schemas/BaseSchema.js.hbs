@@ -1,0 +1,22 @@
+'use strict'
+
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const COMMON = require('./_common')
+
+const {{capitalize entity_name }}Schema = new Schema(Object.assign({}, COMMON, {
+  id: {
+    type: String,
+    default: null
+  },
+  /* -- Schema Here -- */
+}), {
+  collection: '{{lowercase entity_plural_name }}',
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+  versionKey: false
+})
+
+{{capitalize entity_name }}Schema.index({ id: 1 })
+
+module.exports = mongoose.model('{{capitalize entity_plural_name }}', {{capitalize entity_name }}Schema)

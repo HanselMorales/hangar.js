@@ -1,4 +1,4 @@
 module.exports = {
   init: require('./init'),
-  controller: require('./controller')
+  entity: require('./entity')
 }
