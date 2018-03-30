@@ -1,0 +1,64 @@
+'use strict'
+
+const { SECRET_KEYS } = require('../../config')
+const { getErrorKey } = require('../dictionary')
+const  axios = require('axios')
+
+const SESSION_CHECKER = process.env.SESSION_CHECKER_API || 'http://localhost:3010'
+
+module.exports = async (req, res, next) => {
+  let header = req.headers['authorization']
+
+  /* Check if Authorization Header is sended in the request */
+  if (!header) {
+    let headerError = new Error(getErrorKey('#INVALID_AUTHORIZATION_HEADER'))
+    headerError.status = 400
+    next(headerError)
+  }
+
+  try {
+    let query = {
+      url: `${SESSION_CHECKER}/validate/session`,
+      method: 'POST',
+      data: {
+        token: header.split(' ')[1]
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    let response = await axios(query)
+    let { data, status } = response
+    req.ses = data.payload
+    next()
+
+  } catch (err) {
+    if (err.response) {
+      let { status } = err.response
+
+      if (status === 404) {
+        let notFoundError = new Error('#SESSION_EXPIRED_OR_NOT_FOUND')
+        notFoundError.status = 404
+        next(notFoundError)
+      } else if (status === 403) {
+        let expiredError = new Error(getErrorKey('#FORBIDDEN'))
+        expiredError.status = 403
+        next(expiredError)
+      } else if (status === 401) {
+        let expiredError = new Error(getErrorKey('#SESSION_EXPIRED_OR_NOT_FOUND'))
+        expiredError.status = 401
+        next(expiredError)
+      } else if (status === 400) {
+        let invalidToken = new Error(getErrorKey('#INVALID_JWT_TOKEN'))
+        invalidToken.status = 400
+        next(invalidToken)
+      } else if (status === 500) {
+        let serverError = new Error(getErrorKey('#INTERNAL_SERVER_ERROR'))
+        serverError.status = 500
+        serverError.original = err
+        next(serverError)
+      }
+    }
+  }
+}

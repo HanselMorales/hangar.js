@@ -1,0 +1,14 @@
+'use strict'
+
+const LOGGER = require('../utils/logger')
+
+module.exports = (err, req, res, next) => {
+  if (err.status === 500) {
+    LOGGER.report(`#SERVER_ERROR: ${err.original}`)
+  }
+
+  res.formatResponse(err.status || 404, {
+    message: (err.message || '#NOT_FOUND: 404'),
+    status: (err.status || 404)
+  })
+}

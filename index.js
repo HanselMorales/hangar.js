@@ -27,6 +27,9 @@ if (program.init) {
       }
     })
 
-    console.log('Finished!')
+    console.log(`
+      Generation Complete:
+      ${coreFiles.length} Files Generated
+    `)
   })
 }

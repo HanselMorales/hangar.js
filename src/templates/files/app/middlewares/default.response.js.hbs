@@ -1,0 +1,33 @@
+'use strict'
+
+const { getErrorKey } = require('../dictionary')
+const { SERVER_CONFIG } = require('../../config')
+var xml = require('js2xmlparser')
+
+module.exports = (req, res, next) => {
+  res.formatResponse =  (status = 200, response = { data: {}, total: 0 }, config = { xml: false }) => {
+    let formats = {}
+    
+    formats['application/json'] = () => {
+      res.status(status).json(response)
+    }
+
+    if (SERVER_CONFIG.xmlGlobalResponse || config.xml) {
+      formats['application/xml'] = () => {
+        let parsed = xml.parse('response', response)
+        res.status(status).send(parsed)
+      }
+    }
+
+    formats['default'] = () => {
+      res.status(406).json({
+        message: getErrorKey('#NOT_ACCEPTABLE'),
+        status: 406
+      })
+    }
+
+    res.format(formats)
+  }
+
+  next()
+}

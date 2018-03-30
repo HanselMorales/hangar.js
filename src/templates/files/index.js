@@ -5,11 +5,10 @@ module.exports = {
     'controllers': {
 
     },
-    'middlewares': {
-
-    },
     'schemas': {
 
+    },
+    'middlewares': {
     },
     'utils': {
       'loggerJS': fs.readFileSync(`${__dirname}/app/utils/logger.js.hbs`).toString(),
