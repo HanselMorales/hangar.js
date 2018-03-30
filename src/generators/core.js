@@ -19,9 +19,9 @@ module.exports = (answers) => {
       output: process.cwd(),
       source: files.dockerfile
     }, {
-      name: 'config.yaml',
+      name: 'compose.yaml',
       output: process.cwd(),
-      source: files.configYAML
+      source: files.composeYAML
     }, {
       name: '.gitignore',
       output: process.cwd(),
@@ -34,6 +34,10 @@ module.exports = (answers) => {
       name: 'index.js',
       output: `${process.cwd()}/config`,
       source: files.config.indexJS
+    }, {
+      name: '.gitkeep',
+      output: `${process.cwd()}/logs`,
+      source: files.logs.gitKeep
     },
     (!answers.mongo_integration) ? null : {
       name: 'mongo.db.js',
@@ -61,6 +65,31 @@ module.exports = (answers) => {
       name: 'session.js',
       output: `${process.cwd()}/app/utils`,
       source: files.app.utils.sessionJS
-    }
+    },
+    {
+      name: 'default.error.js',
+      output: `${process.cwd()}/app/middlewares`,
+      source: files.app.middlewares.defaultErrorJS
+    },
+    {
+      name: 'default.response.js',
+      output: `${process.cwd()}/app/middlewares`,
+      source: files.app.middlewares.defaultResponseJS
+    },
+    {
+      name: 'handle.error.js',
+      output: `${process.cwd()}/app/middlewares`,
+      source: files.app.middlewares.handleErrorJS
+    },
+    {
+      name: 'handle.jwt.js',
+      output: `${process.cwd()}/app/middlewares`,
+      source: files.app.middlewares.handleJwtJS
+    },
+    {
+      name: 'handle.poweredby.js',
+      output: `${process.cwd()}/app/middlewares`,
+      source: files.app.middlewares.handlePoweredByJS
+    },
   ]
 }

@@ -9,6 +9,11 @@ module.exports = {
 
     },
     'middlewares': {
+      'defaultErrorJS': fs.readFileSync(`${__dirname}/app/middlewares/default.error.js.hbs`).toString(),
+      'defaultResponseJS': fs.readFileSync(`${__dirname}/app/middlewares/default.response.js.hbs`).toString(),
+      'handleErrorJS': fs.readFileSync(`${__dirname}/app/middlewares/handle.error.js.hbs`).toString(),
+      'handleJwtJS': fs.readFileSync(`${__dirname}/app/middlewares/handle.jwt.js.hbs`).toString(),
+      'handlePoweredByJS': fs.readFileSync(`${__dirname}/app/middlewares/handle.poweredby.js.hbs`).toString(),
     },
     'utils': {
       'loggerJS': fs.readFileSync(`${__dirname}/app/utils/logger.js.hbs`).toString(),
@@ -22,9 +27,12 @@ module.exports = {
     'mongoDBJS': fs.readFileSync(`${__dirname}/config/mongo.db.js.hbs`).toString(),
     'redisDBJS': fs.readFileSync(`${__dirname}/config/redis.db.js.hbs`).toString(),
   },
+  'logs': {
+    'gitKeep': ''
+  },
   'gitignore': fs.readFileSync(`${__dirname}/gitignore.hbs`).toString(),
   'dockerignore': fs.readFileSync(`${__dirname}/dockerignore.hbs`).toString(),
-  'configYAML': fs.readFileSync(`${__dirname}/config.yaml.hbs`).toString(),
+  'composeYAML': fs.readFileSync(`${__dirname}/compose.yaml.hbs`).toString(),
   'dockerfile':  fs.readFileSync(`${__dirname}/dockerfile.hbs`).toString(),
   'indexJS': fs.readFileSync(`${__dirname}/index.js.hbs`).toString(),
   'packageJSON': fs.readFileSync(`${__dirname}/package.json.hbs`).toString(),

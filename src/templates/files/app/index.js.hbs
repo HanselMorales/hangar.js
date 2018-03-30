@@ -15,7 +15,7 @@ const VALIDATE_JWT = require('./middlewares/handle.jwt')
 /* -- IMPORT CONTROLLERS HERE -- */
 
 const ROUTER = express.Router()
-ROUTER.use(X_POWERED_BY)
+ROUTER.use(HANDLE_POWERED_BY)
 ROUTER.use(cors())
 
 ROUTER.get('/', (req, res) => {
