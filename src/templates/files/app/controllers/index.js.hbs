@@ -1,0 +1,14 @@
+const path = require('path')
+const fs = require('fs')
+
+var controllers = {}
+var dir = path.join(__dirname, './')
+var exp = new RegExp('Controller', 'i')
+
+fs.readdirSync(dir)
+.filter(c => c.match(exp))
+.map(c => {
+  return controllers[`${c.replace(/Controller.js/i, '')}`] = require(`${dir}/${c}`)
+})
+
+module.exports = controllers

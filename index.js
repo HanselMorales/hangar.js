@@ -5,6 +5,7 @@ var inquirer = require('inquirer')
 var program = require('commander')
 var File = require('./src/file')
 var fs = require('fs')
+var { execSync } = require('child_process')
 
 var CORE = require('./src/generators/core')
 var { init, entity } = require('./src/asks')
@@ -32,9 +33,14 @@ if (program.init) {
     })
 
     console.log(`
-      Generation Complete:
-      ${coreFiles.length} Files Generated
+      Generación de archivos completa:
+      ${coreFiles.length} Archivos Generados
     `)
+
+    console.log(`
+      Instalando dependencias via NPM ...
+    `)
+    execSync('npm i')
   })
 }
 
@@ -73,7 +79,7 @@ if (program.controller) {
     })
 
     console.log(`
-      Entidad Creada!
+      Controlador Creado!
     `)
   })
 }
@@ -88,5 +94,9 @@ if (program.schema) {
       output: `${process.cwd()}/app/schemas`,
       source: app.schemas.baseSchemaJS
     })
+
+    console.log(`
+      Schema Creado!
+    `)
   })
 }

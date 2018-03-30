@@ -3,7 +3,7 @@
 exports.SERVER_CONFIG = {
   'port': process.env.APP_PORT || {{ service_port }},
   'uploadLimit': process.env.UPLOAD_LIMIT || '100mb',
-  'lang': 'ES',
+  'lang': '{{ service_lang }}',
   'xmlGlobalResponse': false
 }
 

@@ -67,6 +67,11 @@ module.exports = (answers) => {
       source: files.app.utils.sessionJS
     },
     {
+      name: 'index.js',
+      output: `${process.cwd()}/app/controllers`,
+      source: files.app.controllers.indexJS
+    },
+    {
       name: 'default.error.js',
       output: `${process.cwd()}/app/middlewares`,
       source: files.app.middlewares.defaultErrorJS
@@ -91,5 +96,10 @@ module.exports = (answers) => {
       output: `${process.cwd()}/app/middlewares`,
       source: files.app.middlewares.handlePoweredByJS
     },
+    {
+      name: '_common.js',
+      output: `${process.cwd()}/app/schemas`,
+      source: files.app.schemas._commonJS
+    }
   ]
 }

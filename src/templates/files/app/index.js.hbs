@@ -12,7 +12,7 @@ const HANDLE_ERROR = require('./middlewares/handle.error')
 const VALIDATE_JWT = require('./middlewares/handle.jwt')
 
 /* Controllers */
-/* -- IMPORT CONTROLLERS HERE -- */
+const controllers = require('./controllers')
 
 const ROUTER = express.Router()
 ROUTER.use(HANDLE_POWERED_BY)
@@ -27,6 +27,8 @@ ROUTER.get('/', (req, res) => {
     status: 200
   }, { xml: false })
 })
+
+/* -- YOUR ROUTES HERE -- */
 
 ROUTER.use(DEFAULT_ERROR) // 404 Error
 ROUTER.use(HANDLE_ERROR)

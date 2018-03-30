@@ -27,7 +27,8 @@ module.exports = [
   {
     type: 'input',
     name: 'project_license',
-    message: 'Licencia:'
+    message: 'Licencia (Apache-2.0):',
+    default: 'Apache-2.0'
   }, 
   {
     type: 'input',
@@ -42,22 +43,16 @@ module.exports = [
     message: 'Versión de node (docker image) carbon'
   }, 
   {
-    type: 'list',
-    name: 'project_type',
-    message: 'Tipo de microservicio:',
-    choices: [
-      'auth',
-      'session',
-      'email',
-      'image',
-      'basic_jwt',
-      'basic'
-    ]
-  }, 
+    type: 'input',
+    name: 'service_lang',
+    message: 'Lenguaje del servicio (ES):',
+    default: 'ES'
+  },
   {
     type: 'input',
     name: 'service_port',
-    message: 'Puerto del servicio:'
+    message: 'Puerto del servicio (3000):',
+    default: 3000
   },
   {
     type: 'confirm',
@@ -87,6 +82,7 @@ module.exports = [
     type: 'input',
     name: 'mongo_db',
     message: 'Nombre DB Mongo:',
+    default: 'tests',
     when: function (a) {
       return a.mongo_integration
     }
@@ -95,7 +91,7 @@ module.exports = [
     type: 'confirm',
     name: 'redis_integration',
     message: 'Integración con RedisDB',
-    default: true
+    default: false
   },
   {
     type: 'input',
