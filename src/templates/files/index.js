@@ -3,7 +3,7 @@ const fs = require('fs')
 module.exports = {
   'app': {
     'controllers': {
-
+      'baseControllerJS': fs.readFileSync(`${__dirname}/app/controllers/BaseController.js.hbs`).toString()
     },
     'schemas': {
 

@@ -8,7 +8,10 @@ const {
 module.exports = (data, props) => {
   try {
     // 1: Register Helpers
-    Handlebars.registerHelper('includes', includesHelper)
+    var helpers = require('handlebars-helpers')
+    var strings = helpers.string({
+      handlebars: Handlebars
+    })
 
     // 2: Create HandleBars Source Template
     let template = Handlebars.compile(props.source) 
