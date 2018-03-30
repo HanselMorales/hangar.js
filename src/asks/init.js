@@ -77,8 +77,8 @@ module.exports = [
   {
     type: 'input',
     name: 'mongo_host',
-    message: 'Host Mongo (localhost):',
-    default: 'localhost',
+    message: 'Host Mongo (mongo):',
+    default: 'mongo',
     when: function (a) {
       return a.mongo_integration
     }
@@ -99,20 +99,20 @@ module.exports = [
   },
   {
     type: 'input',
-    name: 'redis_port',
-    default: 6379,
-    message: 'Puerto de RedisDB:',
+    name: 'redis_host',
+    message: 'Host Redis (redis):',
+    default: 'redis',
     when: function (a) {
       return a.redis_integration
     }
   },
   {
     type: 'input',
-    name: 'redis_host',
-    message: 'Host Redis (localhost):',
-    default: 'localhost',
+    name: 'redis_port',
+    default: 6379,
+    message: 'Puerto de RedisDB:',
     when: function (a) {
       return a.redis_integration
     }
-  },
+  }
 ]
