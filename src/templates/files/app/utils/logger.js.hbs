@@ -1,0 +1,21 @@
+'use strict'
+
+const chalk = require('chalk')
+const moment = require('moment')
+const fs = require('fs')
+
+class Logger {
+  constructor (config = {}) {
+    this.config = Object.assign({}, { directory: 'logs' }, config)
+  }
+
+  getDateTime (format = 'DD[:]MM[:]YYYY - hh:mm:ss a') {
+    return moment().format(format)
+  }
+
+  report (error) {
+    fs.appendFileSync(`${this.config.directory}/${this.getDateTime('DD[-]MM[-]YYYY')}.txt`, `${this.getDateTime()} : ${error} \n`)
+  }
+}
+
+module.exports = new Logger()

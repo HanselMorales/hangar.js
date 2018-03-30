@@ -1,0 +1,69 @@
+'use strict'
+
+const { SERVER_CONFIG } = require('../../config')
+
+const ERRORS = {
+  '#INVALID_AUTHORIZATION_HEADER': {
+    'EN': 'Authorization header is invalid or missed, please give us a session token',
+    'ES': 'El header de autorización es inválido o no se ha enviado, por favor proporcione un token de sesión'
+  },
+  '#INVALID_APP_HEADER': {
+    'EN': 'App Id header is invalid or missed, please give us a valid app id',
+    'ES': 'El header App Id es inválido o no se ha enviado, por favor proporcione un id de app valido'
+  },
+  '#APP_INACTIVE_OR_BANNED': {
+    'EN': 'The app id provided is marked as inactive or banned, please contact to an administrator',
+    'ES': 'El id de app proporcionado está marcado como inactivo o ha sido baneado, por favor contacte a un administador'
+  },
+  '#APP_NOT_FOUND': {
+    'EN': 'The app id provided not found',
+    'ES': 'El id de app proporcionado no ha sido encontrado'
+  },
+  '#INVALID_JWT_TOKEN': {
+    'EN': 'Session token have invalid format',
+    'ES': 'El token de sesion tiene un formato invalido'
+  },
+  '#SESSION_EXPIRED_OR_NOT_FOUND': {
+    'EN': 'Session has expired or not found',
+    'ES': 'La sesion ha caducado, o no ha sido encontrada'
+  },
+  '#INTERNAL_SERVER_ERROR': {
+    'EN': 'Sorry, We experimented and issue with our servers, please try agin in a few moment',
+    'ES': 'Lo sentimos, estamos experimentando inconvenientes con nuestros servidores, por favor intente más tarde'
+  },
+  '#NOT_ACCEPTABLE': {
+    'EN': 'The format requested is not acceptable by this service',
+    'ES': 'El formato solicitado no es aceptado por este servicio'
+  },
+  '#AUTHORIZATION_ERROR': {
+    'EN': 'The authorization fails, please try again',
+    'ES': 'La autorizacion ha fallado, por favor intente nuevamente'
+  },
+  '#RESOURCE_NOT_FOUND': {
+    'EN': "This resource not exist or can't be found",
+    'ES': 'El recurso no existe o no puede ser localizado'
+  }
+}
+
+const RESPONSES = {
+  '#DELETE_SUCCESS': {
+    'EN': 'The resource deleted successfully',
+    'ES': 'El recurso ha sido eliminado correctamente'
+  }
+}
+
+exports.getErrorKey = (key = '', lang = SERVER_CONFIG.lang) => {
+  if (ERRORS.hasOwnProperty(key)) {
+    return ERRORS[key][lang]
+  } else {
+    throw Error('Invalid Key Dictionary')
+  }
+}
+
+exports.getResponseKey = (key = '', lang = SERVER_CONFIG.lang) => {
+  if (RESPONSES.hasOwnProperty(key)) {
+    return RESPONSES[key][lang]
+  } else {
+    throw Error('Invalid Key Dictionary')
+  }
+}

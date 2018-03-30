@@ -44,6 +44,23 @@ module.exports = (answers) => {
       name: 'redis.db.js',
       output: `${process.cwd()}/config`,
       source: files.config.redisDBJS
+    }, {
+      name: 'index.js',
+      output: `${process.cwd()}/app`,
+      source: files.app.indexJS
+    }, {
+      name: 'dictionary.js',
+      output: `${process.cwd()}/app`,
+      source: files.app.dictionaryJS
+    }, {
+      name: 'logger.js',
+      output: `${process.cwd()}/app/utils`,
+      source: files.app.utils.loggerJS
+    },
+    (!answers.redis_integration) ? null : {
+      name: 'session.js',
+      output: `${process.cwd()}/app/utils`,
+      source: files.app.utils.sessionJS
     }
   ]
 }

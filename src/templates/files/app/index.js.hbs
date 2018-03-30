@@ -1,0 +1,34 @@
+'use strict'
+
+const express = require('express')
+const querymen = require('querymen')
+const cors = require('cors')
+const { version } = require('../package.json')
+
+/* Middlewares */
+const DEFAULT_ERROR = require('./middlewares/default.error')
+const HANDLE_POWERED_BY = require('./middlewares/handle.poweredBy')
+const HANDLE_ERROR = require('./middlewares/handle.error')
+const VALIDATE_JWT = require('./middlewares/validate.jwt')
+
+/* Controllers */
+/* -- IMPORT CONTROLLERS HERE -- */
+
+const ROUTER = express.Router()
+ROUTER.use(X_POWERED_BY)
+ROUTER.use(cors())
+
+ROUTER.get('/', (req, res) => {
+  res.formatResponse(200, {
+    message: '{{ project_name }}',
+    service: '{{ project_domain_name }}',
+    legacy_version: 'v1.0',
+    version: version,
+    status: 200
+  }, { xml: false })
+})
+
+ROUTER.use(DEFAULT_ERROR) // 404 Error
+ROUTER.use(HANDLE_ERROR)
+
+module.exports = ROUTER
