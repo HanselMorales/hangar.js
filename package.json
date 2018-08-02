@@ -1,11 +1,11 @@
 {
-  "name": "flagoon",
+  "name": "hangar",
   "version": "0.1.0",
   "description": "Flagoon Code Generator for Flagoon Project",
   "main": "index.js",
   "preferGlobal": true,
   "bin": {
-    "flagoon": "index.js"
+    "hangar": "index.js"
   },
   "scripts": {
     "test": "jest"
