@@ -29,8 +29,8 @@ module.exports = async (req, res, next) => {
     }
 
     let response = await axios(query)
-    let { data, status } = response
-    req.ses = data.payload
+    let { data } = response
+    req.session = data.payload
     next()
 
   } catch (err) {
