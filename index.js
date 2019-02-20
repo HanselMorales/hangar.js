@@ -17,9 +17,6 @@ program
   .option('-e, --entity', 'Crear Entidad')
   .option('-s, --schema', 'Crear Schema')
   .option('-i, --init', 'Inicializar Proyecto Nuevo')
-  .option('-w, --wrapper', 'Crear Wrapper')
-  .option('-r, --router', 'Crear Rutas')
-  .option('-t, --test', 'Crear Test')
   .parse(process.argv)
 
 /**
@@ -76,7 +73,7 @@ if (program.entity) {
 if (program.controller) {
   inquirer.prompt(entity).then(answers => {
     File(answers, {
-      name: `${answers.entity_plural_name}Controller.js`,
+      name: `${answers.entity_name}Controller.js`,
       output: `${process.cwd()}/app/controllers`,
       source: app.controllers.baseControllerJS
     })
@@ -93,65 +90,13 @@ if (program.controller) {
 if (program.schema) {
   inquirer.prompt(entity).then(answers => {
     File(answers, {
-      name: `${answers.entity_plural_name}Schema.js`,
+      name: `${answers.entity_name}Schema.js`,
       output: `${process.cwd()}/app/schemas`,
       source: app.schemas.baseSchemaJS
     })
 
     console.log(`
       Schema Creado!
-    `)
-  })
-}
-
-/**
- * Comando Wrapper
- */
-if (program.wrapper) {
-  inquirer.prompt(entity).then(answers => {
-    File(answers, {
-      name: `${answers.entity_plural_name}.js`,
-      output: `${process.cwd()}/app/wrappers`,
-      source: app.wrappers.baseWrapperJS
-    })
-
-    console.log(`
-      Wrapper Creado!
-    `)
-  })
-}
-
-/**
- * Comando Routes
- */
-if (program.router) {
-  inquirer.prompt(entity).then(answers => {
-    File(answers, {
-      name: `${answers.entity_plura_name}.js`,
-      output: `${process.cwd()}/app/routes`,
-      source: app.routes.baseRoutesJS
-    })
-
-    console.log(`
-      Ruta Creada!
-    `)
-  })
-}
-
-
-/**
- * Comando Test
- */
-if (program.test) {
-  inquirer.prompt(entity).then(answers => {
-    File(answers, {
-      name: `${answers.entity_plural_name}.test.js`,
-      output: `${process.cwd()}/app/test`,
-      source: app.test.baseTestJS
-    })
-
-    console.log(`
-      Test Creado!
     `)
   })
 }

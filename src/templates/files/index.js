@@ -21,15 +21,6 @@ module.exports = {
       'loggerJS': fs.readFileSync(`${__dirname}/app/utils/logger.js.hbs`).toString(),
       'sessionJS': fs.readFileSync(`${__dirname}/app/utils/session.js.hbs`).toString(), 
     },
-    'routes': {
-      'baseRoutesJS': fs.readFileSync(`${__dirname}/app/routes/BaseRoutes.js.hbs`).toString()
-    },
-    'wrappers': {
-      'baseWrapperJS': fs.readFileSync(`${__dirname}/app/wrappers/BaseWrapper.js.hbs`).toString()
-    },
-    'test': {
-      'baseTestJS': fs.readFileSync(`${__dirname}/app/test/BaseTest.js.hbs`).toString()
-    },
     'dictionaryJS': fs.readFileSync(`${__dirname}/app/dictionary.js.hbs`).toString(),
     'indexJS': fs.readFileSync(`${__dirname}/app/index.js.hbs`).toString(),
   },
