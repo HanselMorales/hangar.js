@@ -1,0 +1,79 @@
+const { {{capitalize entity_name }}API } = require('../index') 
+const API = new {{capitalize entity_name }}API()
+
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN || 'TEST_TOKEN'
+let {{lowercase entity_name }}Id = ''
+
+const mock = {
+  
+}
+
+/**
+   * Listar {{capitalize entity_plural_name }}
+   * ==============================
+   *
+  */ 
+test('{{capitalize entity_name }} API Listar', async () => {
+  let { data, status } = await API.apiListar{{capitalize entity_plural_name }}(ACCESS_TOKEN, { limit: 30 })
+  expect.arrayContaining(data.payload)
+  expect(status).toBe(200)
+})
+
+/**
+ * Crear {{capitalize entity_name }}
+ * ==============================
+ *
+ */
+test('{{capitalize entity_name }} API Crear', async () => {
+  let { data, status } = await API.apiCrear{{capitalize entity_name }}(ACCESS_TOKEN, mock)
+  {{lowercase entity_name }}Id = data.payload.id
+  expect.arrayContaining(data.payload)
+  expect(status).toBe(201)
+})
+
+/**
+ * Crear Bulk {{capitalize entity_plural_name }}
+ * ==============================
+ *
+ */
+  
+test('{{capitalize entity_plural_name }} API Crear Bulk', async () => {
+  let { data, status } = await API.apiCrearBulk{{capitalize entity_plural_name }}(ACCESS_TOKEN, { "lista": [ mock, mock, mock ]})
+  expect.arrayContaining(data.payload) 
+  expect(status).toBe(201)
+})
+
+/**
+ * Detallar {{capitalize entity_name }}
+ * ==============================
+ *
+ */
+
+test('{{capitalize entity_name }} API Detallar', async () => {
+  let { data, status } = await API.apiDetallar{{capitalize entity_name }}(ACCESS_TOKEN, {{lowercase entity_name }}Id, {})
+  expect.arrayContaining(data.payload)
+  expect(status).toBe(200)
+})
+
+/**
+ * Actualizar {{capitalize entity_name }}
+ * ==============================
+ *
+ */
+test('{{capitalize entity_name }} API Actualizar', async () => {
+  let { data, status } = await API.apiActualizar{{capitalize entity_name }}(ACCESS_TOKEN, {{lowercase entity_name }}Id, mock)
+  expect.arrayContaining(data.payload)
+  expect(status).toBe(201)
+})
+
+/**
+ * Borrar {{capitalize entity_name }}
+ * ==============================
+ *
+ */
+
+test('{{capitalize entity_name }} API Borrar', async () => {
+  let { data, status } = await API.apiBorrar{{capitalize entity_name }}(ACCESS_TOKEN, {{lowercase entity_name }}Id)
+  expect.arrayContaining(data.payload)
+  expect(status).toBe(201)
+})

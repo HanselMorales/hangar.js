@@ -67,6 +67,41 @@ exports.create{{capitalize entity_name }} = async (req, res, next) => {
 }
 
 /**
+ *  Create Bulk {{capitalize entity_plural_name }}
+ *  This controller create multile {{ entity_plural_name }} at the same time
+ *  on his Id.  
+ *  @method DELETE
+ */
+exports.createBulk{{capitalize entity_plural_name }} = async (req, res, next) => {
+  let { body } = req
+
+  try {
+    let payload = []
+
+    for (var i = 0, len = body.lista.length; i < len; i++) {
+      let {{lowercase entity_name }} = body.lista[i]
+
+      let reg = new {{upcase entity_name }}(Object.assign({}, {{lowercase entity_name }}, {
+        id: uuid.v4(),
+        _created_at: moment()
+      }))
+
+      payload.push(reg)
+    }
+
+    let p = await {{upcase entity_name }}.create(payload)
+
+    res.formatResponse(201, {
+      message: `${payload.length} saved`
+    })
+  } catch (err) {
+    let notFound = new Error(getErrorKey('#RESOURCE_NOT_FOUND'))
+    notFound.status = 404
+    next(notFound)
+  }
+}
+
+/**
  *  Detail {{capitalize entity_name }}
  *  This controller gets data for a {{capitalize entity_name }} based
  *  on de Id.
@@ -164,39 +199,3 @@ exports.delete{{capitalize entity_name }} = async (req, res, next) => {
     next(error)
   }
 }
-
-/**
- *  Create Bulk {{capitalize entity_plural_name }}
- *  This controller create multile {{ entity_plural_name }} at the same time
- *  on his Id.  
- *  @method DELETE
- */
-exports.createBulk{{capitalize entity_plural_name }} = async (req, res, next) => {
-  let { body } = req
-
-  try {
-    let payload = []
-
-    for (var i = 0, len = body.lista.length; i < len; i++) {
-      let {{lowercase entity_name }} = body.lista[i]
-
-      let reg = new {{upcase entity_name }}(Object.assign({}, {{lowercase entity_name }}, {
-        id: uuid.v4(),
-        _created_at: moment()
-      }))
-
-      payload.push(reg)
-    }
-
-    let p = await {{upcase entity_name }}.create(payload)
-
-    res.formatResponse(201, {
-      message: `${payload.length} saved`
-    })
-  } catch (err) {
-    let notFound = new Error(getErrorKey('#RESOURCE_NOT_FOUND'))
-    notFound.status = 404
-    next(notFound)
-  }
-}
-
