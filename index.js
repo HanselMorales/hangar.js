@@ -64,6 +64,12 @@ if (program.entity) {
       source: app.schemas.baseSchemaJS
     })
 
+    File(answers, {
+      name: `Entity${answers.entity_name}Routes.js`,
+      output: `${process.cwd()}/app/routes`,
+      source: app.routes.baseRoutesJS
+    })
+
     console.log(`
       Entidad Creada!
     `)
